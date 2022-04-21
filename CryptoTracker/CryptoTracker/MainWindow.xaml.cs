@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,9 +22,13 @@ namespace CryptoTracker
     /// </summary>
     public partial class MainWindow : Window
     {
+        private APi api = new APi();
         public MainWindow()
         {
             InitializeComponent();
+            dynamic data = api.getData("DIGITAL_CURRENCY_WEEKLY", "BTC", "EUR");
+            Console.WriteLine(data);
+            
         }
     }
 }
