@@ -26,9 +26,21 @@ namespace CryptoTracker
         public MainWindow()
         {
             InitializeComponent();
-            dynamic data = api.getData("DIGITAL_CURRENCY_WEEKLY", "BTC", "EUR");
-            Console.WriteLine(data);
-            
+            Dictionary<string, object> json_data = api.getData("DIGITAL_CURRENCY_MONTHLY", "BTC", "EUR");
+            Dictionary<string, object> data = (Dictionary<string,object>)json_data["Time Series (Digital Currency Monthly)"];
+            foreach (string key in data.Keys)
+            {
+                Console.WriteLine(key);
+                Dictionary<string, object> subvalues = (Dictionary<string, object>)data[key];
+                foreach(string value in subvalues.Keys)
+                {
+                    Console.WriteLine(value);
+                    Console.WriteLine(subvalues[value]);
+                }
+
+            }
+         
+
         }
     }
 }

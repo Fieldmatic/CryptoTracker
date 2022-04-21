@@ -19,7 +19,6 @@ namespace CryptoTracker
             {
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 dynamic json_data = js.Deserialize(client.DownloadString(queryUri), typeof(object));
-                Console.WriteLine(json_data);
                 return json_data;
             }
         }
