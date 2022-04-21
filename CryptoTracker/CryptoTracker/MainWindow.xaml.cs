@@ -27,21 +27,7 @@ namespace CryptoTracker
         {
             InitializeComponent();
             PopulateComboBoxes();
-            Dictionary<string, object> json_data = api.getData("DIGITAL_CURRENCY_MONTHLY", "BTC", "EUR");
-            Dictionary<string, object> data = (Dictionary<string,object>)json_data["Time Series (Digital Currency Monthly)"];
-            foreach (string key in data.Keys)
-            {
-                Console.WriteLine(key);
-                Dictionary<string, object> subvalues = (Dictionary<string, object>)data[key];
-                foreach(string value in subvalues.Keys)
-                {
-                    Console.WriteLine(value);
-                    Console.WriteLine(subvalues[value]);
-                }
-
-            }
-         
-
+            Dictionary<string, double> data = api.getData("5min", "BTC", "EUR", "low");
         }
 
         private void PopulateComboBoxes()
