@@ -27,7 +27,7 @@
                      Grid.ColumnSpan="3"
                      HorizontalAlignment="Stretch" 
                      VerticalAlignment="Stretch"
-                     Margin="0,0,0,0" >
+                     Margin="0,1,0,0" >
             <TabItem Header="Chart">
                 <Grid Height="320">
                     <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" >
@@ -53,9 +53,9 @@
         </TabControl>
         
         
-        <Menu Grid.Row="2" Margin="0,10,0,0">
+        <Menu Grid.Row="2" Margin="0,5,0,0">
             <TextBlock Text="View type :"/>
-            <RadioButton GroupName="viewType" Margin="10,0,0,0">Low</RadioButton>
+            <RadioButton GroupName="viewType" Margin="10,0,0,0" IsChecked="True">Low</RadioButton>
             <RadioButton GroupName="viewType" Margin="10,0,0,0">High</RadioButton>
             <RadioButton GroupName="viewType" Margin="10,0,0,0">Open</RadioButton>
             <RadioButton GroupName="viewType" Margin="10,0,0,0">Close</RadioButton>

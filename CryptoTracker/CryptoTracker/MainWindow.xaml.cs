@@ -26,6 +26,7 @@ namespace CryptoTracker
         public MainWindow()
         {
             InitializeComponent();
+            PopulateComboBoxes();
             Dictionary<string, object> json_data = api.getData("DIGITAL_CURRENCY_MONTHLY", "BTC", "EUR");
             Dictionary<string, object> data = (Dictionary<string,object>)json_data["Time Series (Digital Currency Monthly)"];
             foreach (string key in data.Keys)
@@ -41,6 +42,34 @@ namespace CryptoTracker
             }
          
 
+        }
+
+        private void PopulateComboBoxes()
+        {
+            PopulateDigitalCurrencies();
+            PopulatePhysicalCurrencies();
+            PopulatePeriods();
+
+        }
+
+        private void PopulateDigitalCurrencies()
+        {
+            Assets.ItemsSource = api.getDigitalCurrencies();
+            Assets.SelectedIndex = 83;
+
+        }
+
+        private void PopulatePhysicalCurrencies()
+        {
+            Markets.ItemsSource = api.getPhysicalCurrencies();
+            Markets.SelectedIndex = 42;
+
+        }
+
+        private void PopulatePeriods()
+        {
+            Periods.ItemsSource = new string[] { "1min", "5min","15min", "30min", "60min", "Day","Week", "Month"};
+            Periods.SelectedIndex = 6;
         }
     }
 }
