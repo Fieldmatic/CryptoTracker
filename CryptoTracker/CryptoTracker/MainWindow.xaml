@@ -43,10 +43,12 @@
             <TabItem Header="Table">
                 <Grid Height="320">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="19*"/>
                         <ColumnDefinition Width="775*"/>
                     </Grid.ColumnDefinitions>
-
+                    <DataGrid x:Name="dgrMain" ItemsSource="{Binding Path=DataValues}"
+                              IsReadOnly="True" AlternatingRowBackground="LightGray"
+                              AlternationCount="2" RowHeight="30" ColumnWidth="100*"
+                              FontSize="16"/>
                 </Grid>
                 
             </TabItem>
