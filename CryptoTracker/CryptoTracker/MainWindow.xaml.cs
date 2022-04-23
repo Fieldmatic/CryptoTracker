@@ -33,15 +33,10 @@ namespace CryptoTracker
         public string[] Labels { get; set; }
 
         public string type;
-        public ObservableCollection<Data> DataValues
-        {
-            get;
-            set;
-        }
+        public ObservableCollection<Data> DataValues { get; set; }
         public MainWindow()
         {
             InitializeComponent();
-            //this.DataContext = this;
             PopulateComboBoxes();
             Series = new SeriesCollection();
             low.IsChecked = true;
@@ -50,11 +45,7 @@ namespace CryptoTracker
 
         private void CheckedRDB(object sender, RoutedEventArgs e)
         {
-            string selectedAsset = Assets.SelectedValue.ToString();
-            string selectedMarket = Markets.SelectedValue.ToString();
-            string selectedPeriod = Periods.SelectedValue.ToString();
-            string viewType = (sender as RadioButton).Name;
-            Dictionary<string, double> data = api.getData(selectedPeriod, selectedAsset, selectedMarket, viewType);
+            Dictionary<string, double> data = GetDataFromApi(sender);
 
             //Tabela
             DataValues = new ObservableCollection<Data>();
@@ -62,20 +53,40 @@ namespace CryptoTracker
 
 
             data = data.Reverse().ToDictionary(x => x.Key, x => x.Value);
+
+            //Chart
             ClearSeriesCollection();
 
             Series.Add(new LineSeries
             {
-                Title = selectedAsset,
+                Title = Assets.SelectedValue.ToString(),
                 Values = new ChartValues<double>(data.Values),
                 PointGeometry = DefaultGeometries.Circle,
-                PointGeometrySize = 10
+                PointGeometrySize = 9
 
             });
             Labels = data.Keys.ToArray();
             DataContext = Labels;
             DataContext = this;
 
+        }
+
+        private Dictionary<string, double> GetDataFromApi(object sender)
+        {
+            string selectedAsset = Assets.SelectedValue.ToString();
+            string selectedMarket = Markets.SelectedValue.ToString();
+            string selectedPeriod = Periods.SelectedValue.ToString();
+            string viewType = (sender as RadioButton).Name;
+
+            Dictionary<string, double> data = api.getData(selectedPeriod, selectedAsset, selectedMarket, viewType);
+            return data;
+        }
+
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var radioButtons = LogicalTreeHelper.GetChildren(Menu).OfType<RadioButton>();
+            var selectedRdb = radioButtons.FirstOrDefault(x => (bool)x.IsChecked);
+             if (selectedRdb != null) selectedRdb.IsChecked = false;
         }
 
         private void ClearSeriesCollection()

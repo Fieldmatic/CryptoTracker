@@ -4,8 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-        xmlns:local="clr-namespace:CryptoTracker"
-        mc:Ignorable="d"
         Title="CryptoTracker" Height="450" Width="800">
     <Grid x:Name="myGrid">
         <Grid.RowDefinitions>
@@ -17,11 +15,11 @@
 
         <Menu Grid.Row="0" >
             <TextBlock Text="Select asset:" />
-            <ComboBox x:Name="Assets" Width="100" VerticalAlignment="Center"/>
+            <ComboBox x:Name="Assets" Width="100" VerticalAlignment="Center" SelectionChanged="SelectionChanged"/>
             <TextBlock Text="Select Market:" />
-            <ComboBox x:Name="Markets" Width="100"/>
+            <ComboBox x:Name="Markets" Width="100" SelectionChanged="SelectionChanged"/>
             <TextBlock Text="Select Period:" />
-            <ComboBox x:Name="Periods" Width="100"/>
+            <ComboBox x:Name="Periods" Width="100" SelectionChanged="SelectionChanged"/>
         </Menu>
         <TabControl  Grid.Row="1" 
                      Grid.ColumnSpan="3"
@@ -55,7 +53,7 @@
         </TabControl>
         
         
-        <Menu Grid.Row="2" Margin="0,5,0,0">
+        <Menu x:Name="Menu" Grid.Row="2" Margin="0,5,0,0">
             <TextBlock Text="View type :"/>
             <RadioButton x:Name="low" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB">Low</RadioButton>
             <RadioButton x:Name="high" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB">High</RadioButton>
