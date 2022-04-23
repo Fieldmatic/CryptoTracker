@@ -3,6 +3,7 @@ using LiveCharts.Wpf;
 using LiveCharts.Wpf.Charts.Base;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -32,9 +33,15 @@ namespace CryptoTracker
         public string[] Labels { get; set; }
 
         public string type;
+        public ObservableCollection<Data> DataValues
+        {
+            get;
+            set;
+        }
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
             PopulateComboBoxes();
             Series = new SeriesCollection();
             low.IsChecked = true;
@@ -70,6 +77,16 @@ namespace CryptoTracker
             if (Series != null && Series.Count > 0)
             {
                 Series.Clear();
+            DataValues = new ObservableCollection<Data>();
+            Dictionary<string, double> data = api.getData("5min", "BTC", "EUR", "low");
+            PopulateDataCollection(data);
+        }
+
+        private void PopulateDataCollection(Dictionary<string, double> data)
+        {
+            foreach (var item in data)
+            {
+                DataValues.Add(new Data(item.Key, item.Value));
             }
         }
 
