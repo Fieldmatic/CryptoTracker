@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:CryptoTracker"
         mc:Ignorable="d"
         Title="CryptoTracker" Height="450" Width="800">
-    <Grid>
+    <Grid x:Name="myGrid">
         <Grid.RowDefinitions>
             <RowDefinition Name="GridRow0" Height="Auto" />
             <RowDefinition Name="GridRow1" Height="Auto" />
@@ -17,11 +17,11 @@
 
         <Menu Grid.Row="0" >
             <TextBlock Text="Select asset:" />
-            <ComboBox Name="Assets" Width="100" VerticalAlignment="Center"/>
+            <ComboBox x:Name="Assets" Width="100" VerticalAlignment="Center"/>
             <TextBlock Text="Select Market:" />
-            <ComboBox Name="Markets" Width="100"/>
+            <ComboBox x:Name="Markets" Width="100"/>
             <TextBlock Text="Select Period:" />
-            <ComboBox Name="Periods" Width="100"/>
+            <ComboBox x:Name="Periods" Width="100"/>
         </Menu>
         <TabControl  Grid.Row="1" 
                      Grid.ColumnSpan="3"
@@ -30,7 +30,7 @@
                      Margin="0,1,0,0" >
             <TabItem Header="Chart">
                 <Grid Height="320">
-                    <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" >
+                    <lvc:CartesianChart Series="{Binding Series}" LegendLocation="Right" >
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Price" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
                         </lvc:CartesianChart.AxisY>
@@ -55,12 +55,10 @@
         
         <Menu Grid.Row="2" Margin="0,5,0,0">
             <TextBlock Text="View type :"/>
-            <RadioButton GroupName="viewType" Margin="10,0,0,0" IsChecked="True">Low</RadioButton>
-            <RadioButton GroupName="viewType" Margin="10,0,0,0">High</RadioButton>
-            <RadioButton GroupName="viewType" Margin="10,0,0,0">Open</RadioButton>
-            <RadioButton GroupName="viewType" Margin="10,0,0,0">Close</RadioButton>
-            <Button Width="100" Margin="20,0,0,0">Show</Button>
+            <RadioButton x:Name="low" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB">Low</RadioButton>
+            <RadioButton x:Name="high" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB">High</RadioButton>
+            <RadioButton x:Name="open" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB">Open</RadioButton>
+            <RadioButton x:Name="close" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB">Close</RadioButton>
         </Menu>
-        
     </Grid>
 </Window>

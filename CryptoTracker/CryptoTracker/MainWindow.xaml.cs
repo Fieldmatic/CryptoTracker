@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using LiveCharts.Wpf.Charts.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -23,11 +26,51 @@ namespace CryptoTracker
     public partial class MainWindow : Window
     {
         private APi api = new APi();
+
+        public SeriesCollection Series { get; set; }
+        public Func<double, string> YFormatter { get; set; }
+        public string[] Labels { get; set; }
+
+        public string type;
         public MainWindow()
         {
             InitializeComponent();
             PopulateComboBoxes();
-            Dictionary<string, double> data = api.getData("5min", "BTC", "EUR", "low");
+            Series = new SeriesCollection();
+            low.IsChecked = true;
+            
+        }
+
+        private void CheckedRDB(object sender, RoutedEventArgs e)
+        {
+            string selectedAsset = Assets.SelectedValue.ToString();
+            string selectedMarket = Markets.SelectedValue.ToString();
+            string selectedPeriod = Periods.SelectedValue.ToString();
+            string viewType = (sender as RadioButton).Name;
+            Dictionary<string, double> data = api.getData(selectedPeriod, selectedAsset, selectedMarket, viewType);
+            data = data.Reverse().ToDictionary(x => x.Key, x => x.Value);
+            ClearSeriesCollection();
+
+            Series.Add(new LineSeries
+            {
+                Title = selectedAsset,
+                Values = new ChartValues<double>(data.Values),
+                PointGeometry = DefaultGeometries.Circle,
+                PointGeometrySize = 10
+
+            });
+            Labels = data.Keys.ToArray();
+            DataContext = Labels;
+            DataContext = this;
+
+        }
+
+        private void ClearSeriesCollection()
+        {
+            if (Series != null && Series.Count > 0)
+            {
+                Series.Clear();
+            }
         }
 
         private void PopulateComboBoxes()
@@ -57,5 +100,6 @@ namespace CryptoTracker
             Periods.ItemsSource = new string[] { "1min", "5min","15min", "30min", "60min", "Day","Week", "Month"};
             Periods.SelectedIndex = 6;
         }
+
     }
 }
