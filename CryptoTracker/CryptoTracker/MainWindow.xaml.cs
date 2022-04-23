@@ -41,7 +41,7 @@ namespace CryptoTracker
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = this;
+            //this.DataContext = this;
             PopulateComboBoxes();
             Series = new SeriesCollection();
             low.IsChecked = true;
@@ -55,6 +55,12 @@ namespace CryptoTracker
             string selectedPeriod = Periods.SelectedValue.ToString();
             string viewType = (sender as RadioButton).Name;
             Dictionary<string, double> data = api.getData(selectedPeriod, selectedAsset, selectedMarket, viewType);
+
+            //Tabela
+            DataValues = new ObservableCollection<Data>();
+            PopulateDataCollection(data);
+
+
             data = data.Reverse().ToDictionary(x => x.Key, x => x.Value);
             ClearSeriesCollection();
 
@@ -77,9 +83,7 @@ namespace CryptoTracker
             if (Series != null && Series.Count > 0)
             {
                 Series.Clear();
-            DataValues = new ObservableCollection<Data>();
-            Dictionary<string, double> data = api.getData("5min", "BTC", "EUR", "low");
-            PopulateDataCollection(data);
+            }
         }
 
         private void PopulateDataCollection(Dictionary<string, double> data)
