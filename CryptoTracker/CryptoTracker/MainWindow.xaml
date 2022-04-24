@@ -4,32 +4,36 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-        Title="CryptoTracker" Height="450" Width="800"
-        MinHeight="450" MinWidth="800">
-    <Grid x:Name="myGrid">
+        Title="CryptoTracker" Height="450" Width="800" MinHeight="450" MinWidth="800">
+    <Grid x:Name="myGrid" Height="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
-            <RowDefinition Name="GridRow0" Height="Auto" />
-            <RowDefinition Name="GridRow1" Height="*" />
-            <RowDefinition Name="GridRow2" Height="Auto" />
-            <RowDefinition Name="GridRow3" Height="5" />
+            <RowDefinition x:Name="GridRow0" Height="0.3*" />
+            <RowDefinition x:Name="GridRow1" Height="4*" />
+            <RowDefinition x:Name="GridRow2" Height="0.35*" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="GridColumn0" Width="*"/>
+            <ColumnDefinition x:Name="GridColumn1" Width="*"/>
+            <ColumnDefinition x:Name="GridColumn2" Width="*"/>
+            <ColumnDefinition x:Name="GridColumn3" Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <Menu Grid.Row="0" Height="Auto" Width="Auto">
+        <Menu Grid.Row="0" Grid.ColumnSpan ="4" Height="Auto" Width="Auto" HorizontalAlignment="Stretch">
             <TextBlock Text="Select asset:" />
-            <ComboBox x:Name="Assets" Width="100" VerticalAlignment="Center" SelectionChanged="SelectionChanged"/>
+            <ComboBox x:Name="Assets" MinWidth="80" HorizontalAlignment="Center" SelectionChanged="SelectionChanged"/>
             <TextBlock Text="Select Market:" />
-            <ComboBox x:Name="Markets" Width="100" SelectionChanged="SelectionChanged"/>
+            <ComboBox x:Name="Markets" MinWidth="80" HorizontalAlignment="Center" Grid.Column="1" SelectionChanged="SelectionChanged"/>
             <TextBlock Text="Select Period:" />
-            <ComboBox x:Name="Periods" Width="100" SelectionChanged="SelectionChanged"/>
+            <ComboBox x:Name="Periods" MinWidth="80" HorizontalAlignment="Center" Grid.Column="2" SelectionChanged="SelectionChanged"/>
         </Menu>
-        <TabControl  Grid.Row="1" 
-                     Grid.ColumnSpan="3"
+        <TabControl  Grid.Row="1"
+                     Grid.ColumnSpan="4"
                      HorizontalAlignment="Stretch" 
                      VerticalAlignment="Stretch"
                      Margin="0,1,0,0" >
             <TabItem Header="Chart">
-                <Grid Height="320" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <lvc:CartesianChart Series="{Binding Series}" LegendLocation="Right" VerticalAlignment="Stretch" Zoom="Xy">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <lvc:CartesianChart  Zoom="X" Series="{Binding Series}" LegendLocation="Right" VerticalAlignment="Stretch">
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Price" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
                         </lvc:CartesianChart.AxisY>
@@ -40,7 +44,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Table">
-                <Grid Height="320" VerticalAlignment="Stretch">
+                <Grid VerticalAlignment="Stretch">
                     <DataGrid x:Name="dgrMain" ItemsSource="{Binding Path=DataValues}"
                               IsReadOnly="True" AlternatingRowBackground="LightGray"
                               AlternationCount="2" RowHeight="30" ColumnWidth="100*"
@@ -48,16 +52,16 @@
                               Height="Auto" MinHeight="200" VerticalAlignment="Stretch"
                               Width="Auto" MinWidth="700"/>
                 </Grid>
-                
+
             </TabItem>
         </TabControl>
-
-        <Menu x:Name="Menu" Grid.Row="2" Margin="0,5,0,0">
-            <TextBlock Text="View type :" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            <RadioButton x:Name="low" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">Low</RadioButton>
-            <RadioButton x:Name="high" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">High</RadioButton>
-            <RadioButton x:Name="open" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">Open</RadioButton>
-            <RadioButton x:Name="close" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">Close</RadioButton>
+        <Menu x:Name="Menu" Grid.Row="2" Grid.ColumnSpan="4" Margin="0,5,0,5" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch">
+            <TextBlock Text="View type :"/>
+            <RadioButton x:Name="low" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">Low</RadioButton>
+            <RadioButton x:Name="high" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">High</RadioButton>
+            <RadioButton x:Name="open" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">Open</RadioButton>
+            <RadioButton x:Name="close" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">Close</RadioButton>
         </Menu>
+    
     </Grid>
 </Window>

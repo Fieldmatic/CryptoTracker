@@ -17,14 +17,24 @@ namespace CryptoTracker
         {
             string function = getFunctionByPeriod(period);
             Uri queryUri = new Uri(getQueryUrl(function, period, crypto, market, type));
+            Dictionary<string, double> result = new Dictionary<string, double>();
             using (WebClient client = new WebClient())
             {
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 dynamic json_data = js.Deserialize(client.DownloadString(queryUri), typeof(object));
                 Dictionary<string, object> data_dict = (Dictionary<string, object>)json_data;
-                Dictionary<string, object> data = (Dictionary<string, object>) data_dict[data_dict.ElementAt(1).Key];
-                Dictionary<string, double> result = parseData(data, type, market, function);
-                return result;
+                try
+                {
+                    Dictionary<string, object> data = (Dictionary<string, object>)data_dict[data_dict.ElementAt(1).Key];
+                    result = parseData(data, type, market, function);
+                    return result;
+
+                }
+                catch(ArgumentOutOfRangeException)
+                {
+                    return result;
+                    
+                }            
             }
         }
 

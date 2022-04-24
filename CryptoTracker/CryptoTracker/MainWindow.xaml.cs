@@ -35,26 +35,38 @@ namespace CryptoTracker
         public string type;
         public ObservableCollection<Data> DataValues { get; set; }
         public MainWindow()
-        {
+        {          
             InitializeComponent();
+            CenterWindowOnScreen();
             PopulateComboBoxes();
             Series = new SeriesCollection();
             low.IsChecked = true;
             
         }
 
+        private void CenterWindowOnScreen()
+        {
+            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+            double windowWidth = this.Width;
+            double windowHeight = this.Height;
+            this.Left = (screenWidth / 2) - (windowWidth / 2);
+            this.Top = (screenHeight / 2) - (windowHeight / 2);
+        }
+
         private void CheckedRDB(object sender, RoutedEventArgs e)
         {
             Dictionary<string, double> data = GetDataFromApi(sender);
-
-            //Tabela
+            if (data.Count == 0)
+            {
+                MessageBox.Show("Currency not available","Alert",MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             DataValues = new ObservableCollection<Data>();
             PopulateDataCollection(data);
 
 
             data = data.Reverse().ToDictionary(x => x.Key, x => x.Value);
-
-            //Chart
             ClearSeriesCollection();
 
             Series.Add(new LineSeries
