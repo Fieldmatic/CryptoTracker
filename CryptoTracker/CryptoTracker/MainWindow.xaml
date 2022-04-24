@@ -4,16 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-        Title="CryptoTracker" Height="450" Width="800">
+        Title="CryptoTracker" Height="450" Width="800"
+        MinHeight="450" MinWidth="800">
     <Grid x:Name="myGrid">
         <Grid.RowDefinitions>
             <RowDefinition Name="GridRow0" Height="Auto" />
-            <RowDefinition Name="GridRow1" Height="Auto" />
+            <RowDefinition Name="GridRow1" Height="*" />
             <RowDefinition Name="GridRow2" Height="Auto" />
-            <RowDefinition Name="GridRow3" Height="Auto" />
+            <RowDefinition Name="GridRow3" Height="5" />
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0" >
+        <Menu Grid.Row="0" Height="Auto" Width="Auto">
             <TextBlock Text="Select asset:" />
             <ComboBox x:Name="Assets" Width="100" VerticalAlignment="Center" SelectionChanged="SelectionChanged"/>
             <TextBlock Text="Select Market:" />
@@ -27,8 +28,8 @@
                      VerticalAlignment="Stretch"
                      Margin="0,1,0,0" >
             <TabItem Header="Chart">
-                <Grid Height="320">
-                    <lvc:CartesianChart Series="{Binding Series}" LegendLocation="Right" >
+                <Grid Height="320" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <lvc:CartesianChart Series="{Binding Series}" LegendLocation="Right" VerticalAlignment="Stretch">
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Price" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
                         </lvc:CartesianChart.AxisY>
@@ -39,26 +40,32 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Table">
-                <Grid Height="320">
+                <Grid Height="320" VerticalAlignment="Stretch">
+                    <!--<Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="775*"/>
-                    </Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>-->
                     <DataGrid x:Name="dgrMain" ItemsSource="{Binding Path=DataValues}"
                               IsReadOnly="True" AlternatingRowBackground="LightGray"
                               AlternationCount="2" RowHeight="30" ColumnWidth="100*"
-                              FontSize="16"/>
+                              FontSize="15" HorizontalAlignment="Stretch"
+                              Height="Auto" MinHeight="200" VerticalAlignment="Stretch"
+                              Width="Auto" MinWidth="700"/>
                 </Grid>
                 
             </TabItem>
         </TabControl>
-        
-        
+
+        <!--<DockPanel>-->
         <Menu x:Name="Menu" Grid.Row="2" Margin="0,5,0,0">
-            <TextBlock Text="View type :"/>
-            <RadioButton x:Name="low" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB">Low</RadioButton>
-            <RadioButton x:Name="high" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB">High</RadioButton>
-            <RadioButton x:Name="open" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB">Open</RadioButton>
-            <RadioButton x:Name="close" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB">Close</RadioButton>
+            <TextBlock Text="View type :" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <RadioButton x:Name="low" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">Low</RadioButton>
+            <RadioButton x:Name="high" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">High</RadioButton>
+            <RadioButton x:Name="open" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">Open</RadioButton>
+            <RadioButton x:Name="close" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">Close</RadioButton>
         </Menu>
+        <!--</DockPanel>-->
     </Grid>
 </Window>
