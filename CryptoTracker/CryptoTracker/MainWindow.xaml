@@ -29,7 +29,7 @@
                      Margin="0,1,0,0" >
             <TabItem Header="Chart">
                 <Grid Height="320" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <lvc:CartesianChart Series="{Binding Series}" LegendLocation="Right" VerticalAlignment="Stretch">
+                    <lvc:CartesianChart Series="{Binding Series}" LegendLocation="Right" VerticalAlignment="Stretch" Zoom="Xy">
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Price" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
                         </lvc:CartesianChart.AxisY>
@@ -41,12 +41,6 @@
             </TabItem>
             <TabItem Header="Table">
                 <Grid Height="320" VerticalAlignment="Stretch">
-                    <!--<Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>-->
                     <DataGrid x:Name="dgrMain" ItemsSource="{Binding Path=DataValues}"
                               IsReadOnly="True" AlternatingRowBackground="LightGray"
                               AlternationCount="2" RowHeight="30" ColumnWidth="100*"
@@ -58,7 +52,6 @@
             </TabItem>
         </TabControl>
 
-        <!--<DockPanel>-->
         <Menu x:Name="Menu" Grid.Row="2" Margin="0,5,0,0">
             <TextBlock Text="View type :" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             <RadioButton x:Name="low" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">Low</RadioButton>
@@ -66,6 +59,5 @@
             <RadioButton x:Name="open" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">Open</RadioButton>
             <RadioButton x:Name="close" GroupName="viewType" Margin="10,0,0,0" Checked="CheckedRDB" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">Close</RadioButton>
         </Menu>
-        <!--</DockPanel>-->
     </Grid>
 </Window>
