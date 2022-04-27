@@ -58,7 +58,7 @@ namespace CryptoTracker
                     if (function != "CRYPTO_INTRADAY" && data_type.Contains(type) && data_type.Contains(market))
                             result[key] = Double.Parse(subData[data_type].ToString());
 
-                    else if (data_type.Contains(type))
+                    else if (data_type.Contains(type) && function == "CRYPTO_INTRADAY")
                             result[key] = Double.Parse(subData[data_type].ToString());
                 }
 
